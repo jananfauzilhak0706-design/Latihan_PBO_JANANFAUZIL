@@ -17,8 +17,6 @@ class PendaftaranKedinasan extends Pendaftaran {
 
     /**
      * Metode Query Spesifik untuk Jalur Kedinasan
-     * @param mysqli $db - Objek koneksi database
-     * @return array - Kumpulan objek PendaftaranKedinasan
      */
     public static function getDaftarKedinasan($db) {
         $query = "SELECT * FROM tabel_pendaftaran WHERE jalur_pendaftaran = 'Kedinasan'";
@@ -33,12 +31,17 @@ class PendaftaranKedinasan extends Pendaftaran {
         return $kumpulanObjek;
     }
 
-    // Overriding: Menghitung total biaya untuk Jalur Kedinasan (Tambahan matrikulasi 75.000)
+    /**
+     * [Tahap 5] Overriding: Menghitung total biaya untuk Jalur Kedinasan
+     * Total Biaya = biayaPendaftaranDasar * 1.25 (Surcharge administrasi & kemitraan dinas 25%)
+     */
     public function hitungTotalBiaya() {
-        return $this->biayaPendaftaranDasar + 75000;
+        return $this->biayaPendaftaranDasar * 1.25;
     }
 
-    // Overriding: Menampilkan karakteristik spesifik jalur Kedinasan
+    /**
+     * Overriding: Menampilkan karakteristik spesifik jalur Kedinasan
+     */
     public function tampilkanInfoJalur() {
         echo "<strong>— Karakteristik Jalur Kedinasan —</strong><br>";
         echo "Nomor SK Dinas  : " . $this->skIkatanDinas . "<br>";

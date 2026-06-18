@@ -17,8 +17,6 @@ class PendaftaranPrestasi extends Pendaftaran {
 
     /**
      * Metode Query Spesifik untuk Jalur Prestasi
-     * @param mysqli $db - Objek koneksi database
-     * @return array - Kumpulan objek PendaftaranPrestasi
      */
     public static function getDaftarPrestasi($db) {
         $query = "SELECT * FROM tabel_pendaftaran WHERE jalur_pendaftaran = 'Prestasi'";
@@ -33,13 +31,18 @@ class PendaftaranPrestasi extends Pendaftaran {
         return $kumpulanObjek;
     }
 
-    // Overriding: Menghitung total biaya untuk Jalur Prestasi (Potongan 50.000)
+    /**
+     * [Tahap 5] Overriding: Menghitung total biaya untuk Jalur Prestasi
+     * Total Biaya = biayaPendaftaranDasar - 50000 (Potongan insentif apresiasi)
+     */
     public function hitungTotalBiaya() {
         $total = $this->biayaPendaftaranDasar - 50000;
-        return $total > 0 ? $total : 0;
+        return $total > 0 ? $total : 0; // Mengantisipasi agar nilai tidak negatif
     }
 
-    // Overriding: Menampilkan karakteristik spesifik jalur Prestasi
+    /**
+     * Overriding: Menampilkan karakteristik spesifik jalur Prestasi
+     */
     public function tampilkanInfoJalur() {
         echo "<strong>— Karakteristik Jalur Prestasi —</strong><br>";
         echo "Jenis Prestasi  : " . $this->jenisPrestasi . "<br>";
